@@ -1,0 +1,18 @@
+# The chance of a monster spawning when breaking a block, between 0.0(0%) and 1.0(100%). The default of 0.02 is equal to 2%.
+#Default = 0.02
+spawn-chance: 0.02
+
+#The health of monsters that spawn when breaking a block, 1 heart is equal to 2.0. Regular zombies have 20.0 health.
+#Default = 20.0
+mob-health: 20.0
+
+#Whether transparent blocks (Trapdoors, Ladders, Flower) should be able to spawn monsters when broken.
+#Default = false
+solid-only: false
+
+#Allows you to override the spawn chance and health for specific blocks. The format is the same as the default values above.
+#The default example makes stone half as likley to spawn a monster and the spawner monster will have less health.
+overrides:
+  STONE:
+    spawn-chance: 0.01
+    mob-health: 10.0

@@ -1,0 +1,13 @@
+name: BlockMonsters
+version: 1.0.0
+main: com.jishunamatata.blockmonsters.BlockMonsters
+api-version: 1.16
+
+commands:
+  blockmonsters:
+    usage: /blockmonsters [reload]
+    description: Reload the plugins config file.
+    
+permissions:
+  blockmonsters.reload:
+    description: Allow a user to reload the config file.
