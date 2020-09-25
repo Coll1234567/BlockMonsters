@@ -50,10 +50,13 @@ public class BlockListener implements Listener {
 		}
 
 		Location center = event.getBlock().getLocation().add(0.5, 0, 0.5);
+		String blockName = material.name().replace('_', ' ');
+		blockName = blockName.substring(0, 1).toUpperCase() + blockName.substring(1).toLowerCase();
 
 		Zombie zombie = center.getWorld().spawn(center, Zombie.class);
 		zombie.setBaby();
 		zombie.setRemoveWhenFarAway(true); // True may be the default value
+		zombie.setCustomName(blockInfo.getName().replace("%block%", blockName));
 
 		EntityEquipment equipment = zombie.getEquipment();
 		equipment.setHelmet(new ItemStack(material));

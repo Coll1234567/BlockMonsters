@@ -1,4 +1,4 @@
-# The chance of a monster spawning when breaking a block, between 0.0(0%) and 1.0(100%). The default of 0.02 is equal to 2%.
+#The chance of a monster spawning when breaking a block, between 0.0(0%) and 1.0(100%). The default of 0.02 is equal to 2%.
 #Default = 0.02
 spawn-chance: 0.02
 
@@ -6,13 +6,19 @@ spawn-chance: 0.02
 #Default = 20.0
 mob-health: 20.0
 
-#Whether transparent blocks (Trapdoors, Ladders, Flower) should be able to spawn monsters when broken.
-#Default = false
-solid-only: false
+#The name of the monster that spawns when breaking a block. %block% will be replaced with the name of the block. Color codes using '&' are supported.
+#Default = '&6%block% monster'
+mob-name: '&6%block% monster'
 
-#Allows you to override the spawn chance and health for specific blocks. The format is the same as the default values above.
-#The default example makes stone half as likley to spawn a monster and the spawner monster will have less health.
+#Whether transparent blocks (Trapdoors, Ladders, Flowers, Etc) should be able to spawn monsters when broken.
+#Default = true
+solid-only: true
+
+#Allows you to override the spawn chance, health, and name for specific blocks. The format is the same as the default values above.
+#The default example makes stone half as likley to spawn a monster and the spawned monster will have less health and a different name.
+#All valid block names can be found by using /blockmonsters dumpblocks in game or in the console.
 overrides:
   STONE:
     spawn-chance: 0.01
     mob-health: 10.0
+    mob-name: '&6Scary %block% monster'

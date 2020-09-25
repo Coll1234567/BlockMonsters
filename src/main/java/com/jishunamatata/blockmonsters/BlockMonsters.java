@@ -10,26 +10,18 @@ import com.jishunamatata.blockmonsters.listeners.MonsterDeathListener;
 
 public class BlockMonsters extends JavaPlugin {
 
-	private static BlockMonsters plugin;
-
 	private ConfigManager configManager = new ConfigManager(this);
 	private EntityManager entityManager = new EntityManager();
 
 	public void onEnable() {
-		plugin = this;
-
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new BlockListener(configManager, entityManager), this);
 		pm.registerEvents(new MonsterDeathListener(entityManager), this);
-		
+
 		getCommand("blockmonsters").setExecutor(new BlockMonsterCommand(configManager));
 	}
 
 	public void onDisable() {
 		entityManager.onShutdown();
-	}
-	
-	public static BlockMonsters getInstance() {
-		return plugin;
 	}
 }

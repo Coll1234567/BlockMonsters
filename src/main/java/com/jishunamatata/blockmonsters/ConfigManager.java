@@ -23,30 +23,32 @@ public class ConfigManager {
 
 	public ConfigManager(Plugin plugin) {
 		this.plugin = plugin;
+		if (!plugin.getDataFolder().exists()) {
+			plugin.getDataFolder().mkdirs();
+		}
 		loadConfig();
 	}
 
 	public void loadConfig() {
-		File file = loadResource(this.plugin, "config.yml");
+		File file = copyResource(this.plugin, "config.yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
 		this.solidOnly = config.getBoolean("solid-only", true);
 
-		double baseChance = (float) config.getDouble("spawn-chance");
-		double baseHealth = config.getDouble("mob-health");
+		double baseChance = (float) config.getDouble("spawn-chance", 0.01d);
+		double baseHealth = config.getDouble("mob-health", 20.0d);
+		String baseName = config.getString("mob-name", "&6%block% monster");
 
 		for (Material material : Material.values()) {
 			if (material.isBlock() && !material.isAir()) {
-				double chance = baseChance;
-				double health = baseHealth;
 
 				String path = "overrides." + material.name();
-				if (config.isSet(path)) {
-					chance = config.getDouble(path + ".spawn-chance", baseChance);
-					health = config.getDouble(path + ".mob-health", baseHealth);
-				}
 
-				materialMap.put(material, new BlockInfo(chance, health));
+				double chance = config.getDouble(path + ".spawn-chance", baseChance);
+				double health = config.getDouble(path + ".mob-health", baseHealth);
+				String name = config.getString(path + ".mob-name", baseName);
+
+				materialMap.put(material, new BlockInfo(chance, health, name));
 			}
 		}
 	}
@@ -64,7 +66,8 @@ public class ConfigManager {
 		return materialMap.get(material);
 	}
 
-	private File loadResource(Plugin plugin, String resource) {
+	// saveDefaultConfig doesn't copy comments, this will
+	private File copyResource(Plugin plugin, String resource) {
 		File folder = plugin.getDataFolder();
 		File resourceFile = new File(folder, resource);
 		if (!resourceFile.exists()) {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,12 +18,14 @@ import com.jishunamatata.blockmonsters.PluginStrings;
 public class BlockMonsterCommand implements CommandExecutor, TabCompleter {
 
 	private final ConfigManager configManager;
-	private final List<String> arguments = Arrays.asList("reload");
+	private final List<String> arguments = Arrays.asList("reload", "dumpblocks");
 
 	public BlockMonsterCommand(ConfigManager configManager) {
 		this.configManager = configManager;
 	}
 
+	// TODO: If this gets too long to manage consider using a different
+	// implementation with one class per argument.
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
 		if (args.length < 1) {
@@ -35,8 +38,22 @@ public class BlockMonsterCommand implements CommandExecutor, TabCompleter {
 						+ "You do not have permission to perform this command.");
 				return true;
 			}
+
 			configManager.reloadConfig();
 			sender.sendMessage(PluginStrings.SUCCESS_ICON + ChatColor.GREEN + "Configuration reloaded.");
+			return true;
+		} else if (args[0].equalsIgnoreCase("dumpblocks")) {
+			if (!sender.hasPermission("blockmonsters.dumpblocks")) {
+				sender.sendMessage(PluginStrings.ERROR_ICON + ChatColor.RED
+						+ "You do not have permission to perform this command.");
+				return true;
+			}
+
+			for (Material material : Material.values()) {
+				if (material.isBlock() && !material.isAir()) {
+					sender.sendMessage(material.name());
+				}
+			}
 			return true;
 		}
 		return false;

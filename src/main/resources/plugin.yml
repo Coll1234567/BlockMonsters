@@ -5,9 +5,11 @@ api-version: 1.16
 
 commands:
   blockmonsters:
-    usage: /blockmonsters [reload]
-    description: Reload the plugins config file.
+    usage: /blockmonsters [reload | dumpblocks]
+    description: General command for this plugin.
     
 permissions:
   blockmonsters.reload:
     description: Allow a user to reload the config file.
+  blockmonsters.dumpblocks:
+    description: Allow a user to dump valid block names.
