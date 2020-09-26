@@ -1,1 +1,1 @@
-This is a test readme
+Public repository for the spigot plugin BlockMonsters.
